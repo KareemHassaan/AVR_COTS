@@ -1,45 +1,67 @@
 /**************************************************************************************************************************************
 * LOG:                                                                   							   								  *
 * VERSION					AUTHOR           					DATE 						DESCRIPTION 		   					  *
-* 1.0.0 					Kareem Hassaan						xx xxx,20xx					- Initial Creation						  *
+* 1.0.0 					Kareem Hassaan						20 JAN,2022					- Initial Creation						  *
 **************************************************************************************************************************************/
 /**************************************************************************************************************************************
-* ! Title      	: XXX Driver                                                        							                      *
-* ! File Name	: XXX_program.c                                                       							                      *
-* ! Description : This file has the implementation of Basic of XXX functions        							                      *
+* ! Title      	: Seven Segment Driver                                                 							                      *
+* ! File Name	: SevenSeg_program.c                                                      						                      *
+* ! Description : This file has the implementation of Basic of Seven Segment functions        							              *
 * ! Compiler  	: GNU AVR cross Compiler                                            							                      *
 * ! Target 	  	: Atmega32 Micro-Controller                                         							                      *
-* ! Layer 	  	: XXXX                  						                                         							  *
+* ! Layer 	  	: HAL	                  						                                         							  *
 **************************************************************************************************************************************/
 
 /**************************************************** Library Inclusions *************************************************************/
 #include"../../LIB/STD_TYPES.h"
 #include"../../LIB/BIT_MATH.h"
 /************************************************** Lower Layer Inclusions ***********************************************************/
-
+#include"../MCAL/01-DIO/DIO_intrface.h" 
 /************************************************** Self Layer Inclusions ************************************************************/
 
 /************************************************** Self Files Inclusions ************************************************************/
-/*Must be with that order maybe change Private with config only*/
-#include"XXX_intrface.h"  
-#include"XXX_private.h"
-#include"XXX_config.h"
+#include"SevenSeg_intrface.h"  
+#include"SevenSeg_private.h"
+#include"SevenSeg_config.h"
 
 /***************************************************** Global Variables **************************************************************/
-xintx Global_xintxVarName;
+static uint8 SevenSegmentArray[10] = SEVEN_SEG_ARRAY_VALUES;
 
 /*************************************************************************************************************************************/
 /***************************************************** Functions Definition **********************************************************/
 /*************************************************************************************************************************************/
 /**************************************************************************************************************************************
-* Function Name		: LAYERXXXVoidFunctionName																	                      *
-* Parameters (in)	: xintx Copy_xintxParameterName, xintx * Copy_pxintxParameterName							                      *
+* Function Name		: HSevenSegment_VoidInit																	                      *
+* Parameters (in)	: None																						                      *
 * Parameters (out)	: None																						                      *
 * Return value		: None																						                      *
-* Description		: 														  									                      *
+* Description		: Function To Initialize the Port Of The Seven Segment										                      *
 **************************************************************************************************************************************/
-void LAYERXXXVoidFunctionName(xintx Copy_xintxParameterName, xintx * Copy_pxintxParameterName)
+void HSevenSegment_VoidInit()
 {
-	xintx Local_xintxVarName;
-	/*Some code*/
+	MDIO_voidSetPortDirection(SEVEN_SEGMENT_PORT, ALL_OUTPUT);
+}
+
+/**************************************************************************************************************************************
+* Function Name		: HSevenSegment_VoidInit																	                      *
+* Parameters (in)	: None																						                      *
+* Parameters (out)	: None																						                      *
+* Return value		: None																						                      *
+* Description		: Function To Initialize the Port Of The Seven Segment										                      *
+**************************************************************************************************************************************/
+void HSevenSegment_VoidDisplayNumber(uint8 Copy_uint8Number)
+{
+	#if(SEVEN_SEGMENT_TYPE == COMMON_CATHODE)
+			
+			MDIO_voidSetPortValue(SEVEN_SEGMENT_PORT, SevenSegmentArray[Copy_uint8Number]);
+			
+	#elif(SEVEN_SEGMENT_TYPE == COMMON_ANODE)
+		
+			MDIO_voidSetPortValue(SEVEN_SEGMENT_PORT, ~SevenSegmentArray[Copy_uint8Number]);
+			
+	#else
+	
+		#error"SEVEN_SEGMENT_TYPE Confogration Error"
+	
+	#endif	
 }
