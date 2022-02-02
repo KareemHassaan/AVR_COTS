@@ -16,7 +16,7 @@
 #include"../../LIB/STD_TYPES.h"
 #include"../../LIB/BIT_MATH.h"
 /************************************************** Lower Layer Inclusions ***********************************************************/
-#include"../MCAL/01-DIO/DIO_intrface.h" 
+#include"../../MCAL/01-DIO/DIO_intrface.h" 
 /************************************************** Self Layer Inclusions ************************************************************/
 
 /************************************************** Self Files Inclusions ************************************************************/
@@ -51,11 +51,11 @@ void HSevenSegment_VoidInit()
 **************************************************************************************************************************************/
 void HSevenSegment_VoidDisplayNumber(uint8 Copy_uint8Number)
 {
-	#if(SEVEN_SEGMENT_TYPE == COMMON_CATHODE)
+	#if(SEVEN_SEGMENT_TYPE == COMMON_ANODE)
 			
 			MDIO_voidSetPortValue(SEVEN_SEGMENT_PORT, SevenSegmentArray[Copy_uint8Number]);
 			
-	#elif(SEVEN_SEGMENT_TYPE == COMMON_ANODE)
+	#elif(SEVEN_SEGMENT_TYPE == COMMON_CATHODE)
 		
 			MDIO_voidSetPortValue(SEVEN_SEGMENT_PORT, ~SevenSegmentArray[Copy_uint8Number]);
 			
