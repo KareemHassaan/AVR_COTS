@@ -1,2 +1,2 @@
 # AVR_COTS
-ATMEGA32 Commercial Off The Shelf
+ATMEGA32 Commercial On The Shelf
